@@ -6,10 +6,10 @@
 
 - `<UUID>/` (folder store effects and their preview)
     - `<effect's_files_zip_archive>.zip`
-    - `<effect_preview_file.png`
+    - `<effect_preview_file.png>`
 - `v1/`
     - `effects/`
-        - `<manifest_file_named_with_UUID>`
+        - `<json_manifest_file>`
 
 ## Prepare effects for arcloud uploading
 
@@ -26,7 +26,7 @@ Execute the program with the required parameters:
 - `--id`: Arcloud folder ID (required)
 - `-u, --api-url`: Arcloud URL (required)
 
-## Manifest File
+## Json Manifest File
 
 Manifest file just a JSON file without file extension. Set `Content-Type` as `application/json` before upload file to s3
 bucket. The file's name (UUID) should be the same as bucket contained effects.
@@ -35,7 +35,7 @@ In your bucket create folder `v1` and folder `effects` in it. Manifest file shou
 
 Path structure to file:
 ```
-https://<your_arcloud_domain>/v1/effects/<UUID-of-your-bucket-with-effects>
+https://<your_arcloud_domain>/v1/effects/<json_manifest_file>
 ```
 
 Example:
@@ -43,7 +43,7 @@ Example:
 https://api.arcloud.banuba.net/v1/effects/B4E0A9AA-16C7-47DD-9D00-24B5536B2932
 ```
 
-## Manifest file structure
+## Json Manifest file structure
 
 ```json
 {
@@ -61,8 +61,7 @@ https://api.arcloud.banuba.net/v1/effects/B4E0A9AA-16C7-47DD-9D00-24B5536B2932
 Fields:
 
 - `"URL"` - path to zip archive with effect's files. All effect's files should be placed in root of archive.
-- `"Preview"` - path to preview png file. Each effect has `preview.png` file. Copy them, rename with the effect name and
-  upload to the bucket.
+- `"Preview"` - path to preview png file. Each effect has `preview.png` file.
 - `"ETag"` - MD5 hash of effect `.zip` file.
 
 ## Effects zip archive structure
