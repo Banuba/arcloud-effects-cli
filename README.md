@@ -28,15 +28,13 @@ Execute the program with the required parameters:
 
 ## Json Manifest File
 
-Manifest file just a JSON file without file extension. Set `Content-Type` as `application/json` before upload file to s3
-bucket. The file's name (UUID) should be the same as bucket contained effects.
-
-In your bucket create folder `v1` and folder `effects` in it. Manifest file should be placed in folder `effects`.
-
 Path structure to file:
 ```
 https://<your_arcloud_domain>/v1/effects/<json_manifest_file>
 ```
+
+Manifest file just a JSON file without file extension. Set `Content-Type` as `application/json` before upload file to s3
+bucket. The file's name (UUID) should be the same as bucket contained effects.
 
 Example:
 ```
