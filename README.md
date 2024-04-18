@@ -15,8 +15,14 @@
 
 Execute the program with the required parameters:
 
+#### Mac
 ```bash
 ./mac_arcloud-effects-cli -s <path/to/effects.zip> --id <UUID-of-your-bucket-with-effects> --api-url <your_arcloud_domain>
+```
+
+#### Windows
+```
+.\win_arcloud-effects-cli.exe -s <path\to\effects.zip> --id <UUID-of-your-bucket-with-effects> --api-url <your_arcloud_domain>
 ```
 
 ### Parameters:
