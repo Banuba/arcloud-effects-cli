@@ -59,7 +59,28 @@ func isValidFile(file *zip.File) bool {
 
 func createEffects(zipReader *zip.ReadCloser, dest string) map[string]EffectArchive {
 	effectsMap := make(map[string]EffectArchive)
+	var extraRoot = make(map[string]int)
 	defer zipReader.Close()
+
+	for _, file := range zipReader.File {
+
+		if !isValidFile(file) {
+			continue
+		}
+
+		root, _ := splitPath(file.Name)
+		root = strings.ReplaceAll(root, " ", "_")
+		extraRoot[root] = 1
+		if root == "" {
+			log.Fatalf("Wrong archive structure. File %s in root directory.", file.Name)
+		}
+	}
+
+	if len(extraRoot) == 1 {
+		log.Println(" >>> Extra ROOT folder detected in source Archive. Output stucture may be corrupted ! \n   ******* Trying auto recovery... *******\n")
+	} else {
+		log.Println(" ******* Processing ... it will take a few minutes  *******\n")
+	}
 
 	for _, file := range zipReader.File {
 
@@ -69,6 +90,10 @@ func createEffects(zipReader *zip.ReadCloser, dest string) map[string]EffectArch
 
 		root, filePath := splitPath(file.Name)
 		root = strings.ReplaceAll(root, " ", "_")
+		if len(extraRoot) == 1 {
+			root, filePath = splitPath(filePath)
+			root = strings.ReplaceAll(root, " ", "_")
+		}
 		if root == "" {
 			log.Fatalf("Wrong archive structure. File %s in root diractory.", file.Name)
 		}
@@ -120,6 +145,12 @@ func createEffects(zipReader *zip.ReadCloser, dest string) map[string]EffectArch
 			}
 		}()
 	}
+
+	log.Println(" Completed ")
+	if len(extraRoot) == 1 {
+		log.Println("******* Please check outputs and repack source archive if necessary! *******")
+	}
+
 	return effectsMap
 }
 
